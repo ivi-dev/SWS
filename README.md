@@ -1,2 +1,2 @@
-*S*imple *W*eather _S_ervice
+**S**imple **W**eather **S**ervice
 
