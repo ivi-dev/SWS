@@ -1,0 +1,27 @@
+{
+  "name": "sws",
+  "version": "1.0.0",
+  "description": "A weather forecast web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivi-dev/SWS.git"
+  },
+  "keywords": [
+    "weather",
+    "service",
+    "forecast"
+  ],
+  "author": "Iliyan Videv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivi-dev/SWS/issues"
+  },
+  "homepage": "https://github.com/ivi-dev/SWS#readme",
+  "dependencies": {
+    "bulma": "^0.7.4"
+  }
+}

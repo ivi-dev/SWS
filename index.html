@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Weather Service</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- The units chooser -->
+    <section id="unit-types">
+        <div class="unit column is-narrow active">&#176;C</div>
+        <div class="unit column is-narrow">&#176;F</div>
+    </section>
+
+    <!-- The current conditions section -->
+    <section id="current-conditions">
+        <div id="temp" class="row">10&#176;</div>
+        <div id="graphic-loc-date" class="row">
+            <div id="graphic"><i class="fas fa-cloud"></i></div>
+            <div id="loc-date">
+                <div id="loc"><i class="fas fa-map-marker-alt"></i> DUSSELDORF</div>
+                <div id="date">Tuesday 01 Dec. 2019</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 5-day forecast section -->
+    <section id="forecast">
+        <div class="day today">
+            <div class="row dow">
+                TODAY
+            </div>
+            <div class="row">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="row">
+                19&#176;/34&#176;
+            </div>
+            <div class="row">
+                NW @ 10m/s
+            </div>
+            <div class="row">
+                50%
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="row dow">
+                WED
+            </div>
+            <div class="row">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="row">
+                19&#176;/34&#176;
+            </div>
+            <div class="row">
+                NW @ 10m/s
+            </div>
+            <div class="row">
+                50%
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="row dow">
+                THU
+            </div>
+            <div class="row">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="row">
+                19&#176;/34&#176;
+            </div>
+            <div class="row">
+                NW @ 10m/s
+            </div>
+            <div class="row">
+                50%
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="row dow">
+                FRI
+            </div>
+            <div class="row">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="row">
+                19&#176;/34&#176;
+            </div>
+            <div class="row">
+                NW @ 10m/s
+            </div>
+            <div class="row">
+                50%
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="row dow">
+                SAT
+            </div>
+            <div class="row">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="row">
+                19&#176;/34&#176;
+            </div>
+            <div class="row">
+                NW @ 10m/s
+            </div>
+            <div class="row">
+                50%
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="row dow">
+                SAT
+            </div>
+            <div class="row">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="row">
+                19&#176;/34&#176;
+            </div>
+            <div class="row">
+                NW @ 10m/s
+            </div>
+            <div class="row">
+                50%
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/ko.js"></script>
+    <script src="/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+/* @import '/node_modules/bulma/css/bulma.min.css'; */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100vw;
+    height: 100vh;
+    background: #252727;
+    background: -moz-linear-gradient(120deg, #252727 50%, #575b5b 100%);
+    background: -webkit-linear-gradient(120deg, #252727 50%,#575b5b 100%);
+    background: linear-gradient(to 120deg, #252727 50%,#575b5b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#252727', endColorstr='#575b5b',GradientType=1 );
+}
+
+/* The unit types chooser */
+#unit-types {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    background-color: rgb(109, 111, 112);
+    display: flex;
+    width: 80px;
+    border-radius: 0 8px 8px 0;
+}
+
+.unit {
+    border-radius: 8px;
+    padding: 8px 0;
+    display: flex;
+    justify-content: center;
+    color: rgb(193, 197, 191);
+    width: 50%;
+    cursor: pointer;
+}
+
+.unit.active {
+    background-color: rgb(247, 216, 157);
+    color: rgb(149 ,127, 89);
+    box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+/* The current conditions block */
+#current-conditions {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    color: #fff;
+}
+
+#graphic-loc-date {
+    display: flex;
+    align-items: center;
+}
+
+#current-conditions #temp {
+    font-size: 150px;
+    text-align: right;
+}
+
+#current-conditions #loc {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    letter-spacing: 4px;
+    margin-top: -20px;
+}
+
+#current-conditions #loc i {
+    font-size: 80%;
+    padding-right: 15px;
+    margin-top: -2px
+}
+
+#current-conditions #date {
+    margin-top: 10px;
+    color: rgb(129 ,134, 136);
+    letter-spacing: 5px;
+    text-align: right;
+}
+
+#current-conditions #graphic {
+    color: #fff;
+    font-size: 70px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+
+/* The forecast strip */
+#forecast {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+    width: 100%;
+}
+
+#forecast .day {
+    background-color: #f6cd6f;
+    color: rgba(0, 0, 0, .5);
+    padding: 20px 30px;
+    transform-origin: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#forecast .day:last-of-type {
+    border-radius: 0 5px 5px 0;
+}
+
+#forecast .day .dow {
+    font-weight: bold;
+    color: rgba(0, 0, 0, .3);
+}
+
+#forecast .day:nth-child(even) {
+    background-color: rgb(250, 225, 170);
+}
+
+#forecast .day .row {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#forecast .day.today {
+    border-radius: 5px;
+    box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.1);
+    transform: scale(1.25, 1.25) translateY(-10px) translateX(-10px);
+    border-right: none;
+}
