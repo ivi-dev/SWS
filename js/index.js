@@ -1,3 +1,4 @@
+import { weatherUpdateTimeout, weatherUpdateInterval } from './utils.js';
 import { weatherCodes, loadWeatherCodes } from './weather_codes_loader.js';
 import { citiesDatabse, loadCitiesDatabase } from './cities_database_loader.js';
 
@@ -102,7 +103,6 @@ function MainViewModel() {
         let year = self.DATE_NOW.getFullYear();
         return self.parseWeekday(day, 'long') + ' ' + date + ' ' + self.parseMonth(month) + ' ' + year;
     });
-    this.weatherUpdateInterval = ko.observable(600000);
     this.parseWeekday = function(day, format = 'short') {
         return self.daysMapping[day][format];
     }
@@ -148,7 +148,7 @@ function MainViewModel() {
             throw new Error('The cities database is empty.');
         let cities = [];
         for (let city of citiesDatabse)
-            if (city.name === name)
+            if (city.name.toLowerCase().includes(name.toLowerCase()))
                 cities.push(new City(city.id, city.name, city.country, new Coords(city.coord.lat, city.coord.long)));
         return cities;
     }
@@ -267,7 +267,7 @@ function MainViewModel() {
     this.weatherType = ko.observable(this.FORECAST_5_DAYS);
     this.apiCall = ko.pureComputed(function() {
         return 'http://api.openweathermap.org/data/2.5/' + self.weatherType() + 
-        '/?APPID=18ed9fdaa2110e66a69a476be0df2ca9' + '&id=' + self.locationId() + 
+        '/?APPID=18ed9fdaa2110e66a69a476be0df2ca9' + '&id=' + self.selectedLocation().id + 
         '&units=' + self.activeUnit().name
     });
 
@@ -276,6 +276,7 @@ function MainViewModel() {
         const weatherRequest = new XMLHttpRequest();
         weatherRequest.responseType = 'json';        
         weatherRequest.open('GET', self.apiCall());
+        weatherRequest.timeout = weatherUpdateTimeout;
         weatherRequest.onload = self.constructForecast.bind(weatherRequest);
         weatherRequest.send();
     }
@@ -284,6 +285,7 @@ function MainViewModel() {
         const weatherRequest = new XMLHttpRequest();
         weatherRequest.responseType = 'json';        
         weatherRequest.open('GET', self.apiCall());
+        weatherRequest.timeout = weatherUpdateTimeout;
         weatherRequest.onload = self.constructCurrent.bind(weatherRequest);
         weatherRequest.send();
     }
@@ -294,8 +296,43 @@ function MainViewModel() {
         self.updateCurrent();
     }
     this.periodicUpdate =  function() {
-        setInterval(self.updateWeather, self.weatherUpdateInterval());
+        setInterval(self.updateWeather, weatherUpdateInterval);
     }
+    this.searchLocationActive = ko.observable(false);
+    this.activateLocationSearch = function() {
+        self.searchLocationActive(true);
+    }
+    this.deactivateLocationSearch = function() {
+        self.searchLocationActive(false);
+    }
+    this.locationFromInput = ko.observable('');
+    this.selectedLocation = ko.observable(new Location(2934246, 'Dusseldorf', 'DE'));
+    this.searchLocation = function() {
+        if (self.locationFromInput().trim().length !== 0) {
+            self.locationsList.removeAll();
+            const cities = this.getCityByName(self.locationFromInput());
+            if (cities.length !== 0) {
+                let i = 0;
+                for (let city of cities) {
+                    if (i < 20) {
+                        self.locationsList.push(new Location(city.id, city.name, city.country));
+                        i++;
+                    }
+                }
+            }
+        } else
+            self.locationsList.removeAll();
+        return true;
+    }
+    this.changeLocation = function(location) {
+        self.selectedLocation(location);
+        self.updateWeather();
+        self.locationsList.removeAll();
+        self.currentLocationName(location.name);
+        self.searchLocationActive(false);
+        self.locationFromInput('');
+    }
+    this.locationsList = ko.observableArray([]);
     this.getMostFrequentCondition = function(day) {
         let conditions = {};
         for (let entry of day) {
@@ -391,6 +428,13 @@ function Day(name, icon, temp, wind, humidity, pressure, rain, snow) {
     this.pressure = pressure;
     this.rain = rain;
     this.snow = snow;
+}
+
+function Location(id, name, country) {
+    this.id = id;
+    this.name = name;
+    this.country = country;
+    this.output = this.name + ', ' + this.country;
 }
 
 // function UnitChooserViewModel() {

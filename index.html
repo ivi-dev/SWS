@@ -43,7 +43,18 @@
             </div>
             <div id="loc-date">
                 <div id="loc"><i data-bind="css: locationMarker"></i> 
-                    <span data-bind="text: currentLocationName, click: updateWeather"></span>
+                    <span data-bind="text: currentLocationName, 
+                                    click: activateLocationSearch, 
+                                    css: { 'hidden': searchLocationActive }, 
+                                    attr: { 'title': selectedLocation() !== undefined ? selectedLocation().output : currentLocationName }"></span>
+                    <!-- ko if: searchLocationActive -->
+                        <input type="text" data-bind="hasFocus: true, textInput: locationFromInput, 
+                                                     event: { keyup: searchLocation }">
+                        <i class="fas fa-times" data-bind="click: deactivateLocationSearch"></i>
+                    <!-- /ko -->
+                    <div id="locations-list" data-bind="foreach: locationsList">
+                        <div class="row" data-bind="text: output, click: $parent.changeLocation"></div>
+                    </div>
                 </div>
                 <div id="date" data-bind="html: currentDate"></div>
             </div>
@@ -79,6 +90,7 @@
     </section>
 
     <script src="/js/ko.js"></script>
+    <script type="module" src="/js/utils.js"></script>
     <script type="module" src="/js/weather_codes_loader.js"></script>
     <script type="module" src="/js/cities_database_loader.js"></script>
     <script type="module" src="/js/index.js"></script>
