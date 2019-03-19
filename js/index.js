@@ -357,6 +357,10 @@ function MainViewModel() {
         self.searchLocationActive(false);
         self.locationFromInput('');
     }
+    this.buttonPressed = function(data, event) {
+        if (event.key.toLowerCase() === 'escape')
+            self.deactivateLocationSearch();
+    }
     this.getMostFrequentCondition = function(day) {
         let conditions = {};
         for (let entry of day) {
