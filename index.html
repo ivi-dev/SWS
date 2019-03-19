@@ -52,7 +52,7 @@
                                                      event: { keyup: searchLocation }">
                         <i class="fas fa-times" data-bind="click: deactivateLocationSearch"></i>
                     <!-- /ko -->
-                    <div id="locations-list" data-bind="foreach: locationsList">
+                    <div id="locations-list" data-bind="foreach: locationsDisplayList, event: { scroll: showNextSegmentOfLocations }">
                         <div class="row" data-bind="text: output, click: $parent.changeLocation"></div>
                     </div>
                 </div>

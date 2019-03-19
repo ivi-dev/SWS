@@ -228,7 +228,7 @@ function MainViewModel() {
     this.constructCurrent = function() {
         const currentForecast = this.response;
         self.currentTemp(currentForecast.main.temp);
-        self.currentWindDirection(currentForecast.wind.deg);
+        self.currentWindDirection(currentForecast.wind.deg || '---');
         self.currentWindSpeed(currentForecast.wind.speed);
         self.currentHum(currentForecast.main.humidity);
         self.currentPress(currentForecast.main.pressure);
@@ -307,32 +307,53 @@ function MainViewModel() {
     }
     this.locationFromInput = ko.observable('');
     this.selectedLocation = ko.observable(new Location(2934246, 'Dusseldorf', 'DE'));
+    this.locationIndex = ko.observable(0);
+    this.locationsLimit = 500;
+    this.locationsList = ko.observableArray([]);
+    this.locationsDisplayList = ko.observableArray([]);
     this.searchLocation = function() {
         if (self.locationFromInput().trim().length !== 0) {
             self.locationsList.removeAll();
+            self.locationsDisplayList.removeAll();
             const cities = this.getCityByName(self.locationFromInput());
             if (cities.length !== 0) {
-                let i = 0;
-                for (let city of cities) {
-                    if (i < 20) {
-                        self.locationsList.push(new Location(city.id, city.name, city.country));
-                        i++;
-                    }
-                }
+                for (let city of cities)
+                    self.locationsList.push(new Location(city.id, city.name, city.country));
+                self.locationIndex(0);
+                self.updateLocations(self.locationsList(), self.locationIndex(), self.locationsLimit);
             }
-        } else
+        } 
+        else {
             self.locationsList.removeAll();
+            self.locationsDisplayList.removeAll();
+        }
         return true;
+    }
+    this.updateLocations = function(allLocations, nthLocation, limit) {
+        if (nthLocation === 0)
+            self.locationsDisplayList.removeAll();
+        for (let i = nthLocation; i < limit; i++) {
+            if (self.locationsDisplayList().length === allLocations.length)
+                break;
+            self.locationsDisplayList.push(allLocations[i]);
+        }
+    }
+    this.showNextSegmentOfLocations = function(data, event) {
+        const scrollTop = Math.abs(event.target.scrollTop);
+        if (Math.abs(event.target.scrollTop) === (event.target.scrollHeight - event.target.offsetHeight)) {
+            self.locationIndex(self.locationIndex() + self.locationsLimit + 1);
+            self.updateLocations(self.locationsList(), self.locationIndex(), self.locationsLimit);
+        }
     }
     this.changeLocation = function(location) {
         self.selectedLocation(location);
         self.updateWeather();
         self.locationsList.removeAll();
+        self.locationsDisplayList.removeAll();
         self.currentLocationName(location.name);
         self.searchLocationActive(false);
         self.locationFromInput('');
     }
-    this.locationsList = ko.observableArray([]);
     this.getMostFrequentCondition = function(day) {
         let conditions = {};
         for (let entry of day) {

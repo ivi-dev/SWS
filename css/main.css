@@ -224,6 +224,7 @@ body {
     opacity: 0.5;
     transform-origin: center;
     transform: scale(0.8, 0.8);
+    padding-right: 10px;
 }
 
 #forecast .day.today {
