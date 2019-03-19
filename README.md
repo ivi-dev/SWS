@@ -2,7 +2,7 @@
 Simple Weather Service (SWS) is a web based application the primary purpose of which is to provide accurate weather conditions reports and forcasts.
 
 # Usage
-SWS is accessible through a browser jsut like any other website. 
+SWS is accessible through a browser just like any other website. 
 
 # Getting Started
 If you are interested in the project just fork the repo and and let a rip.
