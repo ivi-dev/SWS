@@ -1,5 +1,3 @@
-/* @import '/node_modules/bulma/css/bulma.min.css'; */
-
 * {
     box-sizing: border-box;
 }
@@ -8,8 +6,7 @@ body {
     font-family: Roboto;
     padding: 0 !important;
     margin: 0 !important;
-    width: 100vw;
-    height: 100vh;
+    overflow: hidden;
     background: #252727;
     background: -moz-linear-gradient(120deg, #252727 50%, #575b5b 100%);
     background: -webkit-linear-gradient(120deg, #252727 50%,#575b5b 100%);
@@ -23,9 +20,9 @@ body {
     left: 30px;
     top: 30px;
     background-color: rgb(109, 111, 112);
+    border-radius: 8px;
     display: flex;
     width: 80px;
-    border-radius: 0 8px 8px 0;
 }
 
 .unit {
@@ -56,11 +53,37 @@ body {
 #graphic-loc-date {
     display: flex;
     align-items: center;
+    margin-top: 30px;
 }
 
-#current-conditions #temp {
+#current-conditions #temp-cond {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#current-conditions #temp-cond #temp {
     font-size: 150px;
-    text-align: right;
+}
+
+#current-conditions #temp-cond #cond {
+    margin-right: 50px;
+}
+
+#current-conditions #temp-cond #cond .row {
+    padding: 15px 50px 15px 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#current-conditions #temp-cond #cond .row i {
+    margin-right: 15px;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+#current-conditions #temp-cond #cond .row span {
+    padding-right: 20px;
 }
 
 #current-conditions #loc {
@@ -80,16 +103,27 @@ body {
 #current-conditions #date {
     margin-top: 10px;
     color: rgb(129 ,134, 136);
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     text-align: right;
 }
 
 #current-conditions #graphic {
+    font-size: 60px;
     color: #fff;
-    font-size: 70px;
-    margin-right: 50px;
+    text-align: center;
     margin-bottom: 20px;
     width: 100%;
+}
+
+#current-conditions #graphic img {
+    border: 0px;
+    width: 80px;
+    height: 80px;
+}
+
+#current-conditions #graphic #condition-text {
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 11px;
 }
 
 
@@ -106,7 +140,7 @@ body {
 #forecast .day {
     background-color: #f6cd6f;
     color: rgba(0, 0, 0, .5);
-    padding: 20px 30px;
+    padding: 20px 50px;
     transform-origin: center;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -115,8 +149,13 @@ body {
     border-radius: 0 5px 5px 0;
 }
 
+#forecast .day:first-of-type {
+    border-radius: 5px 0 0 5px;
+}
+
 #forecast .day .dow {
     font-weight: bold;
+    font-size: 120%;
     color: rgba(0, 0, 0, .3);
 }
 
@@ -127,6 +166,12 @@ body {
 #forecast .day .row {
     margin: 20px 0;
     text-align: center;
+}
+
+#forecast .day .row i {
+    opacity: 0.5;
+    transform-origin: center;
+    transform: scale(0.8, 0.8);
 }
 
 #forecast .day.today {

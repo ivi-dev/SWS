@@ -1,0 +1,237 @@
+{
+    "200": {
+        "description": "thunderstorm with light rain", 
+        "icon": "11d"
+    },
+    "201": {
+        "description": "thunderstorm with rain", 
+        "icon": "11d"
+    },
+    "202": {
+        "description": "thunderstorm with light rain", 
+        "icon": "11d"
+    },
+    "210": {
+        "description": "light thunderstorm", 
+        "icon": "11d"
+    },
+    "211": {
+        "description": "thunderstorm", 
+        "icon": "11d"
+    },
+    "212": {
+        "description": "heavy thunderstorm", 
+        "icon": "11d"
+    },
+    "221": {
+        "description": "ragged thunderstorm", 
+        "icon": "11d"
+    },
+    "230": {
+        "description": "thunderstorm with light drizzle", 
+        "icon": "11d"
+    },
+    "231": {
+        "description": "thunderstorm with drizzle", 
+        "icon": "11d"
+    },
+    "232": {
+        "description": "thunderstorm with heavy drizzle", 
+        "icon": "11d"
+    },
+    "300": {
+        "description": "light intensity drizzle", 
+        "icon": "09d"
+    },
+    "301": {
+        "description": "drizzle", 
+        "icon": "09d"
+    },
+    "302": {
+        "description": "heavy intensity drizzle", 
+        "icon": "09d"
+    },
+    "310": {
+        "description": "light intensity drizzle", 
+        "icon": "09d"
+    },
+    "311": {
+        "description": "drizzle rain", 
+        "icon": "09d"
+    },
+    "312": {
+        "description": "heavy intensity drizzle rain", 
+        "icon": "09d"
+    },
+    "313": {
+        "description": "shower rain and drizzle", 
+        "icon": "09d"
+    },
+    "314": {
+        "description": "shower rain and drizzle", 
+        "icon": "09d"
+    },
+    "321": {
+        "description": "shower drizzle", 
+        "icon": "09d"
+    },
+    "500": {
+        "description": "light rain", 
+        "icon": "10d"
+    },
+    "501": {
+        "description": "moderate rain", 
+        "icon": "10d"
+    },
+    "502": {
+        "description": "heavy intensity rain", 
+        "icon": "10d"
+    },
+    "503": {
+        "description": "very heavy rain", 
+        "icon": "10d"
+    },
+    "504": {
+        "description": "extreme rain", 
+        "icon": "10d"
+    },
+    "511": {
+        "description": "freezing rain", 
+        "icon": "13d"
+    },
+    "520": {
+        "description": "light intensity shower rain", 
+        "icon": "09d"
+    },
+    "521": {
+        "description": "shower rain", 
+        "icon": "09d"
+    },
+    "522": {
+        "description": "heavy intensity shower rain", 
+        "icon": "09d"
+    },
+    "531": {
+        "description": "ragged shower rain", 
+        "icon": "09d"
+    },
+    "600": {
+        "description": "light snow", 
+        "icon": "13d"
+    },
+    "601": {
+        "description": "Snow", 
+        "icon": "13d"
+    },
+    "602": {
+        "description": "Heavy snow", 
+        "icon": "13d"
+    },
+    "611": {
+        "description": "Sleet", 
+        "icon": "13d"
+    },
+    "612": {
+        "description": "Light shower sleet", 
+        "icon": "13d"
+    },
+    "613": {
+        "description": "Shower sleet", 
+        "icon": "13d"
+    },
+    "615": {
+        "description": "Light rain and snow", 
+        "icon": "13d"
+    },
+    "616": {
+        "description": "Rain and snow", 
+        "icon": "13d"
+    },
+    "620": {
+        "description": "Light shower snow", 
+        "icon": "13d"
+    },
+    "621": {
+        "description": "Shower snow", 
+        "icon": "13d"
+    },
+    "622": {
+        "description": "Heavy shower snow", 
+        "icon": "13d"
+    },
+    "701": {
+        "description": "mist", 
+        "icon": "50d"
+    },
+    "711": {
+        "description": "smoke", 
+        "icon": "50d"
+    },
+    "721": {
+        "description": "haze", 
+        "icon": "50d"
+    },
+    "731": {
+        "description": "sand/ dust whirls", 
+        "icon": "50d"
+    },
+    "741": {
+        "description": "fog", 
+        "icon": "50d"
+    },
+    "751": {
+        "description": "sand", 
+        "icon": "50d"
+    },
+    "761": {
+        "description": "dust", 
+        "icon": "50d"
+    },
+    "762": {
+        "description": "volcanic ash", 
+        "icon": "50d"
+    },
+    "771": {
+        "description": "sqaulls", 
+        "icon": "50d"
+    },
+    "781": {
+        "description": "tornado", 
+        "icon": "50d"
+    },
+    "800": {
+        "description": "Clear Sky", 
+        "icon": { 
+            "day": "01d", 
+            "night": "01n" 
+        }
+    },
+    "801": {
+        "description": "few clouds", 
+        "icon": { 
+            "day": "02d", 
+            "night": "02n" 
+        }
+    },
+    "802": {
+        "description": "scattered clouds", 
+        "icon": { 
+            "day": "03d", 
+            "night": "03n" 
+        }
+    },
+    "803": {
+        "description": "broken clouds", 
+        "icon": { 
+            "day": "04d", 
+            "night": "04n" 
+        }
+    },
+    "804": {
+        "description": "overcast clouds", 
+        "icon": { 
+            "day": "04d", 
+            "night": "04n" 
+        }
+    }
+}
