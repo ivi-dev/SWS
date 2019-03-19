@@ -1,5 +1,5 @@
 # What is it
-Simple Weather Service (SWS) is w web based application the primary purpose of which is to provide accurate weather conditions reports and forcasts.
+Simple Weather Service (SWS) is a web based application the primary purpose of which is to provide accurate weather conditions reports and forcasts.
 
 # Usage
 SWS is accessible through a browser jsut like any other website. 
