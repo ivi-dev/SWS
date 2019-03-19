@@ -20,20 +20,6 @@
     <!-- The current conditions section -->
     <section id="current-conditions">
         <div id="temp-cond" class="row">
-            <div id="cond">
-                <div class="row wind">
-                    <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: currentWind"></span>
-                </div>
-                <div class="row humidity">
-                    <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: currentHumidity"></span>
-                </div>
-                <div class="row air-pressure">
-                    <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: currentPressure"></span>
-                </div>
-                <div class="row clouds">
-                    <i class="fas fa-cloud" title="Cloud Coverage"></i> <span data-bind="text: currentCloudCoverage"></span>
-                </div>
-            </div>
             <div id="temp" data-bind="html: currentTemperature"></div>
         </div>
         <div id="graphic-loc-date" class="row">
@@ -59,6 +45,20 @@
                 <div id="date" data-bind="html: currentDate"></div>
             </div>
         </div>
+        <div id="cond">
+                <div class="row wind">
+                    <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: currentWind"></span>
+                </div>
+                <div class="row humidity">
+                    <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: currentHumidity"></span>
+                </div>
+                <div class="row air-pressure">
+                    <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: currentPressure"></span>
+                </div>
+                <div class="row clouds">
+                    <i class="fas fa-cloud" title="Cloud Coverage"></i> <span data-bind="text: currentCloudCoverage"></span>
+                </div>
+            </div>
     </section>
 
     <!-- The 5-day forecast section -->

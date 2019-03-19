@@ -304,6 +304,9 @@ function MainViewModel() {
     }
     this.deactivateLocationSearch = function() {
         self.searchLocationActive(false);
+        self.locationFromInput('');
+        self.locationsList.removeAll();
+        self.locationsDisplayList.removeAll();
     }
     this.locationFromInput = ko.observable('');
     this.selectedLocation = ko.observable(new Location(2934246, 'Dusseldorf', 'DE'));

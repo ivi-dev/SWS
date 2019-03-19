@@ -53,7 +53,6 @@ body {
 #graphic-loc-date {
     display: flex;
     align-items: center;
-    margin-top: 30px;
 }
 
 #current-conditions #temp-cond {
@@ -66,23 +65,25 @@ body {
     font-size: 150px;
 }
 
-#current-conditions #temp-cond #cond {
-    margin-right: 50px;
+#current-conditions #cond {
+    display: flex;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 15px;
+    margin-top: -20px; 
 }
 
-#current-conditions #temp-cond #cond .row {
-    padding: 15px 50px 15px 10px;
+#current-conditions #cond .row {
+    padding: 0px 0px 15px 10px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#current-conditions #temp-cond #cond .row i {
+#current-conditions #cond .row i {
     margin-right: 15px;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.3);
 }
 
-#current-conditions #temp-cond #cond .row span {
+#current-conditions #cond .row span {
     padding-right: 20px;
 }
 
@@ -165,6 +166,7 @@ body {
     text-align: center;
     margin-bottom: 20px;
     width: 100%;
+    margin-right: 40px;
 }
 
 #current-conditions #graphic img {
