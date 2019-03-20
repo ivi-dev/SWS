@@ -1,4 +1,5 @@
-import { weatherUpdateTimeout, weatherUpdateInterval, latestWeatherUpdateCalculationInterval } from './utils.js';
+import { weatherUpdateTimeout, weatherUpdateInterval, 
+    latestWeatherUpdateCalculationInterval, storeItem, getItem } from './utils.js';
 import { weatherCodes, loadWeatherCodes } from './weather_codes_loader.js';
 import { citiesDatabse, loadCitiesDatabase } from './cities_database_loader.js';
 
@@ -394,6 +395,7 @@ function MainViewModel() {
     }
     this.changeLocation = function(location) {
         self.selectedLocation(location);
+        storeItem('sws_selectedLocation', JSON.stringify(self.selectedLocation()));
         self.updateWeather();
         self.locationsList.removeAll();
         self.locationsDisplayList.removeAll();
