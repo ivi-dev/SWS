@@ -65,32 +65,34 @@ body {
     font-size: 150px;
 }
 
-#current-conditions #cond {
+.cond {
     display: flex;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     padding-top: 15px;
     margin-top: -20px; 
 }
 
-#current-conditions #cond .row {
+.cond .row {
     padding: 0px 0px 15px 10px;
     display: flex;
     align-items: center;
 }
 
-#current-conditions #cond .row i {
+.cond .row i {
     margin-right: 15px;
     color: rgba(255, 255, 255, 0.3);
 }
 
-#current-conditions #cond .row span {
+.cond .row span {
     padding-right: 20px;
 }
 
 #current-conditions #loc {
+    min-width: 200px;
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     font-size: 30px;
     letter-spacing: 4px;
     margin-top: -20px;
@@ -106,11 +108,10 @@ body {
     position: absolute;
     right: 0;
     top: -2px;
-    width: 230px;
+    width: 200px;
     padding: 0 20px 0 0;
     font-family: Roboto;
     font-size: 30px;
-    text-transform: uppercase;
     background-color: transparent;
     border: none;
     outline: none !important;
@@ -158,26 +159,45 @@ body {
     color: rgb(129 ,134, 136);
     letter-spacing: 3px;
     text-align: right;
+    min-width: 250px;
 }
 
 #current-conditions #graphic {
     font-size: 60px;
     color: #fff;
-    text-align: center;
+    text-align: right;
     margin-bottom: 20px;
     width: 100%;
-    margin-right: 40px;
+    margin-right: 20px;
 }
 
 #current-conditions #graphic img {
     border: 0px;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
 }
 
 #current-conditions #graphic #condition-text {
     color: rgba(255, 255, 255, 0.8);
     margin-top: 11px;
+}
+
+#current-conditions #controls {
+    font-size: 80%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#current-conditions #controls .faded {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+#current-conditions #controls a {
+    padding: 0 20px 0 20px; 
+}
+
+#current-conditions #controls i {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 
@@ -187,7 +207,6 @@ body {
     justify-content: center;
     position: absolute;
     bottom: 50px;
-    left: 30px;
     width: 100%;
 }
 
@@ -197,6 +216,7 @@ body {
     padding: 20px 50px;
     transform-origin: center;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 #forecast .day:last-of-type {
@@ -234,6 +254,33 @@ body {
     box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.1);
     transform: scale(1.25, 1.25) translateY(-10px) translateX(-10px);
     border-right: none;
+}
+
+
+
+/* The hourly report */
+#hourly-report {
+    position: absolute;
+    left: 140px;
+    top: 30px;
+    font-size: 80%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 20px 20px 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+#hourly-report h2 {
+    padding: 0 0 10px 10px;
+    margin: 0;
+}
+
+#hourly-report h2 .date {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#hourly-report .cond {
+    margin-top: 0;
 }
 
 

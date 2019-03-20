@@ -28,7 +28,8 @@
                     alt: currentConditionsText }">
             </div>
             <div id="loc-date">
-                <div id="loc"><i data-bind="css: locationMarker"></i> 
+                <div id="loc" data-bind="style: { width: locElementWidth() + 'px' }">
+                    <i data-bind="css: locationMarker"></i> 
                     <span data-bind="text: currentLocationName, 
                                     click: activateLocationSearch, 
                                     css: { 'hidden': searchLocationActive }, 
@@ -45,48 +46,82 @@
                 <div id="date" data-bind="html: currentDate"></div>
             </div>
         </div>
-        <div id="cond">
-                <div class="row wind">
-                    <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: currentWind"></span>
-                </div>
-                <div class="row humidity">
-                    <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: currentHumidity"></span>
-                </div>
-                <div class="row air-pressure">
-                    <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: currentPressure"></span>
-                </div>
-                <div class="row clouds">
-                    <i class="fas fa-cloud" title="Cloud Coverage"></i> <span data-bind="text: currentCloudCoverage"></span>
-                </div>
+        <div class="cond">
+            <div class="row wind">
+                <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: currentWind"></span>
             </div>
+            <div class="row humidity">
+                <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: currentHumidity"></span>
+            </div>
+            <div class="row air-pressure">
+                <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: currentPressure"></span>
+            </div>
+            <div class="row clouds">
+                <i class="fas fa-cloud" title="Cloud Coverage"></i> <span data-bind="text: currentCloudCoverage"></span>
+            </div>
+        </div>
+        <div id="controls">
+            <span title="Latest Weather Update" data-bind="attr: { title: latestUpdateDate }" class="faded">
+                Latest weather: <span data-bind="text: calculatedLatestUpdate"></span>
+            </span>     
+            <a href="#" data-bind="click: updateWeather" title="Update Weather Now"><i class="fas fa-sync-alt"></i></a>
+        </div>
     </section>
 
     <!-- The 5-day forecast section -->
     <section id="forecast" data-bind="foreach: forecast">
-        <div class="day">
-            <div class="row dow" data-bind="text: name"></div>
-            <div class="row"><img data-bind="attr: { src: icon }" width=50 height=50></div>
-
+        <div class="day" data-bind="click: $parent.selectDay">
+            <div class="row dow" data-bind="text: $parent.parseWeekday(date.getDay())"></div>
+            <div class="row"><img data-bind="attr: { src: icon }"></div>
             <div class="row">
                 <i class="fas fa-thermometer-full" title="Temperature"></i>
                 <span data-bind="html: temp.reading"></span>
             </div>
-
             <div class="row">
                 <i class="fas fa-wind" title="Wind"></i> 
                 <span data-bind="html: wind.reading"></span>
             </div>
-
             <div class="row">
                 <i class="fas fa-percent" title="Humidity"></i> 
                 <span data-bind="html: humidity.reading"></span>
             </div>
-
             <div class="row">
                 <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> 
                 <span data-bind="html: pressure.reading"></span>
             </div>
         </div>
+    </section>
+
+    <!-- The hourly report -->
+    <section id="hourly-report" data-bind="visible: selectedDay">
+        <h2>Hourly Report: 
+            <span class="date" data-bind="text: selectedDay() ? parseWeekday(selectedDay().date.getDay()) + ' ' 
+                                                        + selectedDay().date.getDate() + ' ' + 
+                                                        parseMonth(selectedDay().date.getMonth()) : '--- -- ---'"></span>
+        </h2>
+        <!-- ko if: selectedDay -->
+            <!-- ko foreach: selectedDay().readings -->
+            <div class="row">
+                <div class="cond">
+                    <div class="row time">
+                        <i class="far fa-clock"></i> <span data-bind="text: time"></span>
+                    </div>
+                    <div class="row temp">
+                            <i class="fas fa-thermometer-full" title="Wind"></i> <span data-bind="html: temp.reading"></span>
+                        </div>
+                    <div class="row wind">
+                        <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: wind.reading"></span>
+                    </div>
+                    <div class="row humidity">
+                        <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: humidity.reading"></span>
+                    </div>
+                    <div class="row air-pressure">
+                        <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: pressure.reading"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+        <!-- /ko -->
     </section>
 
     <script src="/js/ko.js"></script>

@@ -1,4 +1,4 @@
-import { weatherUpdateTimeout, weatherUpdateInterval } from './utils.js';
+import { weatherUpdateTimeout, weatherUpdateInterval, latestWeatherUpdateCalculationInterval } from './utils.js';
 import { weatherCodes, loadWeatherCodes } from './weather_codes_loader.js';
 import { citiesDatabse, loadCitiesDatabase } from './cities_database_loader.js';
 
@@ -93,8 +93,7 @@ function MainViewModel() {
     this.currentConditionsText = ko.observable('Waiting for a weather update...');
     this.currentConditionsIcon = ko.observable('');
     
-    this.locationId = ko.observable(2934246);
-    this.currentLocationName = ko.observable('DUSSELDORF');
+    this.currentLocationName = ko.observable('Dusseldorf');
     this.locationMarker = ko.observable('fas fa-map-marker-alt');
     this.currentDate = ko.pureComputed(function() {
         let day = self.DATE_NOW.getDay();
@@ -103,6 +102,25 @@ function MainViewModel() {
         let year = self.DATE_NOW.getFullYear();
         return self.parseWeekday(day, 'long') + ' ' + date + ' ' + self.parseMonth(month) + ' ' + year;
     });
+    this.latestUpdateDate = ko.observable();
+    this.calculatedLatestUpdate = ko.observable('---');
+    this.calculateLatestUpdate = function() {
+        if (self.latestUpdateDate()) {
+            const mins = new Date(new Date() - self.latestUpdateDate()).getMinutes();
+            let value;
+            if (mins > 0)
+                value = mins + ' minutes ago';
+            else if (mins > 60)
+                value = (mins / 60).toFixed() + ' hours ago';
+            else
+                value = 'just now';
+            self.calculatedLatestUpdate(value); 
+        }
+    };
+    this.periodicLatestUpdateTimeCalculation = function() {
+        setInterval(self.calculateLatestUpdate, latestWeatherUpdateCalculationInterval);
+    }
+
     this.parseWeekday = function(day, format = 'short') {
         return self.daysMapping[day][format];
     }
@@ -113,7 +131,6 @@ function MainViewModel() {
         const split = date.split(' ');
         const dateSplit = split[0].split('-');
         const timeSplit = split[1].split(':');
-        // console.log(new Date(dateSplit[0] + '-' + dateSplit[1] + '-' + dateSplit[2] + 'T' + timeSplit[0] + ':' + timeSplit[1]));
         return new Date(dateSplit[0] + '-' + dateSplit[1] + '-' + dateSplit[2] + 'T' + timeSplit[0] + ':' + timeSplit[1]);
     }
     this.capitalize = function(string) {
@@ -141,8 +158,7 @@ function MainViewModel() {
     
     // 5-day forecast
     this.forecastWeather = ko.observableArray();
-    this.forecast = ko.observableArray([
-    ]);
+    this.forecast = ko.observableArray([]);
     this.getCityByName = function(name) {
         if (citiesDatabse === undefined)
             throw new Error('The cities database is empty.');
@@ -193,6 +209,8 @@ function MainViewModel() {
             const day_ = next5Days[day];
             let temp = 0, temps = [], windDirection = 0, windSpeed = 0, humidity_ = 0, pressure_ = 0;
             let rain_ = 0,  snow_ = 0;
+            let readings = [];
+            let date;
             for (let entry of day_) {
                 temp += entry.main.temp;
                 temps.push(entry.main.temp);
@@ -200,12 +218,26 @@ function MainViewModel() {
                 windSpeed += entry.wind.speed;
                 humidity_ += entry.main.humidity;
                 pressure_ += entry.main.pressure;
+                date = self.parseAPIDate(entry.dt_txt);
+                let rain = 0, snow = 0;
                 if (Object.keys(entry).indexOf('rain') !== -1)
-                    if (Object.keys(entry.rain).length !== 0)
+                    if (Object.keys(entry.rain).indexOf('3h') !== -1) {
+                        rain = entry.rain['3h'];
                         rain_ += entry.rain['3h'];
+                    }
                 if (Object.keys(entry).indexOf('snow') !== -1)
-                    if (Object.keys(entry.snow).length !== 0)
+                    if (Object.keys(entry.snow).indexOf('3h') !== -1) {
+                        snow = entry.snow['3h'];
                         snow_ += entry.snow['3h'];
+                    }
+
+                readings.push(new Reading(self.parseAPIDate(entry.dt_txt).getHours() + ':00', 
+                        new Temp(entry.main.temp.toFixed(1)), 
+                        new Wind(entry.wind.deg.toFixed() + '&#176;', entry.wind.speed.toFixed()), 
+                        new Humidity(entry.main.humidity.toFixed()), 
+                        new Pressure(entry.main.pressure.toFixed(2)), 
+                        new Precipitation('rain', rain !== 0 ? rain.toFixed() : 0), 
+                        new Precipitation('snow', snow !== 0 ? snow.toFixed() : 0)));
             }
             const precipitationRain = rain_ !== 0 ? new Precipitation('rain', (rain_ / day_.length).toFixed()) : 
                 new Precipitation('rain', rain_.toFixed());
@@ -215,15 +247,16 @@ function MainViewModel() {
                 weatherCodes[self.getMostFrequentCondition(day_).toString()].icon : 
                 weatherCodes[self.getMostFrequentCondition(day_).toString()].icon.day; // TODO: Determine which icon to use
 
-            self.forecast.push(new Day(self.capitalize(day), 
+            self.forecast.push(new Day(date, 
             'http://openweathermap.org/img/w/' + icon + '.png',
             new Temp((temp / day_.length).toFixed(1), Math.min(...temps).toFixed(), Math.max(...temps).toFixed()),
             new Wind((windDirection / day_.length).toFixed() + '&#176;', (windSpeed / day_.length).toFixed()),
             new Humidity((humidity_ / day_.length).toFixed()),
             new Pressure((pressure_ / day_.length).toFixed(2)),
             precipitationRain, 
-            precipitationSnow));
+            precipitationSnow, readings));
         }
+        self.selectedDay(self.forecast()[0]);
     }
     this.constructCurrent = function() {
         const currentForecast = this.response;
@@ -234,8 +267,14 @@ function MainViewModel() {
         self.currentPress(currentForecast.main.pressure);
         self.currentClouds(currentForecast.clouds.all);
         self.currentConditionsIcon('http://openweathermap.org/img/w/' + currentForecast.weather[0].icon + '.png');
-        self.currentConditionsText(self.titalize(currentForecast.weather[0].description))
+        self.currentConditionsText(self.titalize(currentForecast.weather[0].description));
+        self.latestUpdateDate(new Date());
     }
+    this.selectDay = function(day) {
+        self.selectedDay(day);
+        // console.log(self.selectedDay().readings)
+    }
+    this.selectedDay = ko.observable();
     this.calculateWind = function(direction, speed, output = 'text') {
         let direction_;
         if (direction >= 260 && direction <= 280)
@@ -356,7 +395,9 @@ function MainViewModel() {
         self.currentLocationName(location.name);
         self.searchLocationActive(false);
         self.locationFromInput('');
+        self.locElementWidth(self.selectedLocation().name.length * 23);
     }
+    this.locElementWidth = ko.observable('auto');
     this.buttonPressed = function(data, event) {
         if (event.key.toLowerCase() === 'escape')
             self.deactivateLocationSearch();
@@ -447,9 +488,21 @@ function Precipitation(type = 'rain', value = 'n/a', unit = 'mm') {
 }
 
 // Denotes a one day forecast. A 5-day forecast would feature 5 of these
-function Day(name, icon, temp, wind, humidity, pressure, rain, snow) {
-    this.name = name;
+function Day(date, icon, temp, wind, humidity, pressure, rain, snow, readings) {
+    this.date = date;
     this.icon = icon;
+    this.temp = temp;
+    this.wind = wind;
+    this.humidity = humidity;
+    this.pressure = pressure;
+    this.rain = rain;
+    this.snow = snow;
+    this.readings = readings;
+}
+
+// Denotes a 3 hour reading
+function Reading(time, temp, wind, humidity, pressure, rain, snow) {
+    this.time = time;
     this.temp = temp;
     this.wind = wind;
     this.humidity = humidity;
@@ -481,6 +534,7 @@ ko.bindingHandlers.autoWeatherUpdate = {
             loadCitiesDatabase();
             loadWeatherCodes(bindingContext.$data.updateWeather);
             bindingContext.$data.periodicUpdate();
+            bindingContext.$data.periodicLatestUpdateTimeCalculation();
         }
     }
 };
