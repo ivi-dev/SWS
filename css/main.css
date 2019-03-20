@@ -53,7 +53,6 @@ body {
 #graphic-loc-date {
     display: flex;
     align-items: center;
-    margin-top: 30px;
 }
 
 #current-conditions #temp-cond {
@@ -66,29 +65,34 @@ body {
     font-size: 150px;
 }
 
-#current-conditions #temp-cond #cond {
-    margin-right: 50px;
+.cond {
+    display: flex;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 15px;
+    margin-top: -20px; 
 }
 
-#current-conditions #temp-cond #cond .row {
-    padding: 15px 50px 15px 10px;
+.cond .row {
+    padding: 0px 0px 15px 10px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#current-conditions #temp-cond #cond .row i {
+.cond .row i {
     margin-right: 15px;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.3);
 }
 
-#current-conditions #temp-cond #cond .row span {
+.cond .row span {
     padding-right: 20px;
 }
 
 #current-conditions #loc {
+    min-width: 200px;
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     font-size: 30px;
     letter-spacing: 4px;
     margin-top: -20px;
@@ -100,30 +104,100 @@ body {
     margin-top: -2px
 }
 
+#current-conditions #loc input {
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 200px;
+    padding: 0 20px 0 0;
+    font-family: Roboto;
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    outline: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+}
+
+#current-conditions #loc i.fa-times {
+    position: absolute;
+    top: 15px;
+    right: -15px;
+    font-size: 50% !important;
+    color: #fff;
+    cursor: pointer;
+}
+
+#current-conditions #loc #locations-list {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 400px;
+    font-size: 60%;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    max-height: 400px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+#current-conditions #loc #locations-list .row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+#current-conditions #loc #locations-list .row:hover {
+    background-color: rgba(240, 206, 125, 1);
+    color: rgba(0, 0, 0, 1);
+}
+
 #current-conditions #date {
     margin-top: 10px;
     color: rgb(129 ,134, 136);
     letter-spacing: 3px;
     text-align: right;
+    min-width: 250px;
 }
 
 #current-conditions #graphic {
     font-size: 60px;
     color: #fff;
-    text-align: center;
+    text-align: right;
     margin-bottom: 20px;
     width: 100%;
+    margin-right: 20px;
 }
 
 #current-conditions #graphic img {
     border: 0px;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
 }
 
 #current-conditions #graphic #condition-text {
     color: rgba(255, 255, 255, 0.8);
     margin-top: 11px;
+}
+
+#current-conditions #controls {
+    font-size: 80%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#current-conditions #controls .faded {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+#current-conditions #controls a {
+    padding: 0 20px 0 20px; 
+}
+
+#current-conditions #controls i {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 
@@ -133,7 +207,6 @@ body {
     justify-content: center;
     position: absolute;
     bottom: 50px;
-    left: 30px;
     width: 100%;
 }
 
@@ -143,6 +216,8 @@ body {
     padding: 20px 50px;
     transform-origin: center;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.6);
 }
 
 #forecast .day:last-of-type {
@@ -172,6 +247,7 @@ body {
     opacity: 0.5;
     transform-origin: center;
     transform: scale(0.8, 0.8);
+    padding-right: 10px;
 }
 
 #forecast .day.today {
@@ -179,4 +255,41 @@ body {
     box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.1);
     transform: scale(1.25, 1.25) translateY(-10px) translateX(-10px);
     border-right: none;
+}
+
+
+
+/* The hourly report */
+#hourly-report {
+    position: absolute;
+    left: 140px;
+    top: 30px;
+    font-size: 80%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 20px 20px 10px 20px;
+    border-radius: 10px;
+    border: 1px ridge rgba(255, 255, 255, 0.5);
+    color: #fff;
+    /* box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.4); */
+
+}
+
+#hourly-report h2 {
+    padding: 0 0 10px 10px;
+    margin: 0;
+}
+
+#hourly-report h2 .date {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#hourly-report .cond {
+    margin-top: 0;
+}
+
+
+
+/* General rules */
+.hidden {
+    opacity: 0 !important;
 }

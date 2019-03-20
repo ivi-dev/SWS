@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body data-bind="autoWeatherUpdate:">
+<body data-bind="autoWeatherUpdate, event: { keyup: buttonPressed }">
     <!-- The units chooser -->
     <section id="unit-types" data-bind="foreach: tempUnits">
         <div class="unit" data-bind="html: output(), 
@@ -20,20 +20,6 @@
     <!-- The current conditions section -->
     <section id="current-conditions">
         <div id="temp-cond" class="row">
-            <div id="cond">
-                <div class="row wind">
-                    <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: currentWind"></span>
-                </div>
-                <div class="row humidity">
-                    <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: currentHumidity"></span>
-                </div>
-                <div class="row air-pressure">
-                    <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: currentPressure"></span>
-                </div>
-                <div class="row clouds">
-                    <i class="fas fa-cloud" title="Cloud Coverage"></i> <span data-bind="text: currentCloudCoverage"></span>
-                </div>
-            </div>
             <div id="temp" data-bind="html: currentTemperature"></div>
         </div>
         <div id="graphic-loc-date" class="row">
@@ -42,35 +28,63 @@
                     alt: currentConditionsText }">
             </div>
             <div id="loc-date">
-                <div id="loc"><i data-bind="css: locationMarker"></i> 
-                    <span data-bind="text: currentLocationName, click: updateWeather"></span>
+                <div id="loc" data-bind="style: { width: locElementWidth() + 'px' }">
+                    <i data-bind="css: locationMarker"></i> 
+                    <span data-bind="text: currentLocationName, 
+                                    click: activateLocationSearch, 
+                                    css: { 'hidden': searchLocationActive }, 
+                                    attr: { 'title': selectedLocation() !== undefined ? selectedLocation().output : currentLocationName }"></span>
+                    <!-- ko if: searchLocationActive -->
+                        <input type="text" data-bind="hasFocus: true, textInput: locationFromInput, 
+                                                     event: { keyup: searchLocation }">
+                        <i class="fas fa-times" data-bind="click: deactivateLocationSearch"></i>
+                    <!-- /ko -->
+                    <div id="locations-list" data-bind="foreach: locationsDisplayList, event: { scroll: showNextSegmentOfLocations }">
+                        <div class="row" data-bind="text: output, click: $parent.changeLocation"></div>
+                    </div>
                 </div>
                 <div id="date" data-bind="html: currentDate"></div>
             </div>
+        </div>
+        <div class="cond">
+            <div class="row wind">
+                <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: currentWind"></span>
+            </div>
+            <div class="row humidity">
+                <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: currentHumidity"></span>
+            </div>
+            <div class="row air-pressure">
+                <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: currentPressure"></span>
+            </div>
+            <div class="row clouds">
+                <i class="fas fa-cloud" title="Cloud Coverage"></i> <span data-bind="text: currentCloudCoverage"></span>
+            </div>
+        </div>
+        <div id="controls">
+            <span title="Latest Weather Update" data-bind="attr: { title: latestUpdateDate }" class="faded">
+                Latest weather: <span data-bind="text: calculatedLatestUpdate"></span>
+            </span>     
+            <a href="#" data-bind="click: updateWeather" title="Update Weather Now"><i class="fas fa-sync-alt"></i></a>
         </div>
     </section>
 
     <!-- The 5-day forecast section -->
     <section id="forecast" data-bind="foreach: forecast">
-        <div class="day">
-            <div class="row dow" data-bind="text: name"></div>
-            <div class="row"><img data-bind="attr: { src: icon }" width=50 height=50></div>
-
+        <div class="day" data-bind="click: $parent.selectDay">
+            <div class="row dow" data-bind="text: $parent.parseWeekday(date.getDay())"></div>
+            <div class="row"><img data-bind="attr: { src: icon }"></div>
             <div class="row">
                 <i class="fas fa-thermometer-full" title="Temperature"></i>
                 <span data-bind="html: temp.reading"></span>
             </div>
-
             <div class="row">
                 <i class="fas fa-wind" title="Wind"></i> 
                 <span data-bind="html: wind.reading"></span>
             </div>
-
             <div class="row">
                 <i class="fas fa-percent" title="Humidity"></i> 
                 <span data-bind="html: humidity.reading"></span>
             </div>
-
             <div class="row">
                 <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> 
                 <span data-bind="html: pressure.reading"></span>
@@ -78,7 +92,40 @@
         </div>
     </section>
 
+    <!-- The hourly report -->
+    <section id="hourly-report" data-bind="visible: selectedDay">
+        <h2>Hourly Report: 
+            <span class="date" data-bind="text: selectedDay() ? parseWeekday(selectedDay().date.getDay()) + ' ' 
+                                                        + selectedDay().date.getDate() + ' ' + 
+                                                        parseMonth(selectedDay().date.getMonth()) : '--- -- ---'"></span>
+        </h2>
+        <!-- ko if: selectedDay -->
+            <!-- ko foreach: selectedDay().readings -->
+            <div class="row">
+                <div class="cond">
+                    <div class="row time">
+                        <i class="far fa-clock"></i> <span data-bind="text: time"></span>
+                    </div>
+                    <div class="row temp">
+                            <i class="fas fa-thermometer-full" title="Wind"></i> <span data-bind="html: temp.reading"></span>
+                        </div>
+                    <div class="row wind">
+                        <i class="fas fa-wind" title="Wind"></i> <span data-bind="html: wind.reading"></span>
+                    </div>
+                    <div class="row humidity">
+                        <i class="fas fa-percent" title="Humidity"></i> <span data-bind="text: humidity.reading"></span>
+                    </div>
+                    <div class="row air-pressure">
+                        <i class="fas fa-tachometer-alt" title="Atmospheric Pressure"></i> <span data-bind="text: pressure.reading"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+        <!-- /ko -->
+    </section>
+
     <script src="/js/ko.js"></script>
+    <script type="module" src="/js/utils.js"></script>
     <script type="module" src="/js/weather_codes_loader.js"></script>
     <script type="module" src="/js/cities_database_loader.js"></script>
     <script type="module" src="/js/index.js"></script>
