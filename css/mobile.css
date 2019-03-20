@@ -1,0 +1,171 @@
+@media screen and (max-width: 1250px) {
+    body {
+        display: flex;
+        flex-flow: column;
+        padding: 20px;
+        overflow: scroll;
+    }
+
+    #unit-types {
+        position: static;
+        width: 80px;
+    }
+
+    #current-conditions {
+        position: static;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        order: 1;
+    }
+
+    #graphic-loc-date {
+        display: flex;
+        flex-flow: column-reverse;
+        align-items: center;
+    }
+
+    #current-conditions #loc {
+        justify-content: flex-start;
+    }
+
+    #current-conditions #graphic {
+        text-align: center;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+
+    #forecast {
+        flex-flow: column;
+        position: static;
+        padding: 0 0px;
+        order: 3;
+    }
+
+    #forecast .day {
+        padding: 20px 50px;
+        font-size: 4vw;
+    }
+
+    #forecast .day .row img {
+        width: 100px;
+    }
+
+    #forecast .day:first-of-type {
+        border-radius: 10px 10px 0 0;
+    }
+    
+    #forecast .day:last-of-type {
+        border-radius: 0 0 10px 10px;
+    }
+
+    #hourly-report {
+        position: static;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        font-size: 100%;
+        order: 2;
+    }
+
+    .cond {
+        justify-content: space-between;
+    }
+}
+
+
+
+@media screen and (max-width: 670px) {
+    body {
+        padding: 15px;
+    }
+
+    #current-conditions #temp-cond #temp {
+        font-size: 100px;
+        padding-left: 25px; 
+    }
+
+    #current-conditions #graphic img {
+        width: 80px;
+        height: 80px;
+    }
+
+    #current-conditions #loc {
+        margin-top: 0;
+        font-size: 25px;
+        justify-content: center;
+    }
+
+    #current-conditions #loc i {
+        padding-right: 10px;
+    }
+
+    #current-conditions #date {
+        font-size: 80%;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    #current-conditions .cond {
+        font-size: 70%;
+        padding: 5px 0 10px 0;
+    }
+
+    #current-conditions .cond .row {
+        padding: 10px 5px 5px 0;
+    }
+
+    #current-conditions #controls {
+        flex-flow: row-reverse;
+        font-size: 70%;
+        padding-right: 20px;
+    }
+
+    #current-conditions #controls a {
+        padding-right: 10px;
+    }
+
+    #hourly-report {
+        position: static;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: none;
+        font-size: 50%;
+        padding: 10px 5px 5px 5px;
+        order: 2;
+    }
+
+    #hourly-report h2 {
+        font-size: 80%;
+    }
+
+    .cond {
+        padding: 10px 5px 5px 5px;
+    }
+
+    .cond .row {
+        padding: 0px 0px 5px 5px;
+    }
+    
+    .cond .row i {
+        margin-right: 5px;
+        color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .cond .row span {
+        padding-right: 5px;
+    }
+
+    #forecast .day {
+        padding: 15px 10px 20px 10px;
+        font-size: 5vw;
+    }
+
+    #forecast .day .row {
+        margin: 15px 0;
+    }
+
+    #forecast .day .row img {
+        width: 60px;
+    }
+}

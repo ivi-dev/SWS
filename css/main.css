@@ -4,8 +4,8 @@
 
 body {
     font-family: Roboto;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
     overflow: hidden;
     background: #252727;
     background: -moz-linear-gradient(120deg, #252727 50%, #575b5b 100%);
@@ -250,6 +250,10 @@ body {
     padding-right: 10px;
 }
 
+#forecast .day .row img {
+    width: 50px;
+}
+
 #forecast .day.today {
     border-radius: 5px;
     box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.1);
@@ -270,8 +274,6 @@ body {
     border-radius: 10px;
     border: 1px ridge rgba(255, 255, 255, 0.5);
     color: #fff;
-    /* box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.4); */
-
 }
 
 #hourly-report h2 {
