@@ -217,6 +217,7 @@ body {
     transform-origin: center;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.6);
 }
 
 #forecast .day:last-of-type {
@@ -267,7 +268,10 @@ body {
     background-color: rgba(0, 0, 0, 0.2);
     padding: 20px 20px 10px 20px;
     border-radius: 10px;
+    border: 1px ridge rgba(255, 255, 255, 0.5);
     color: #fff;
+    /* box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.4); */
+
 }
 
 #hourly-report h2 {
