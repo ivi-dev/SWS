@@ -107,11 +107,15 @@ function MainViewModel() {
     this.calculateLatestUpdate = function() {
         if (self.latestUpdateDate()) {
             const mins = new Date(new Date() - self.latestUpdateDate()).getMinutes();
-            let value;
-            if (mins > 0)
-                value = mins + ' minutes ago';
-            else if (mins > 60)
-                value = (mins / 60).toFixed() + ' hours ago';
+            let value, unit;
+            if (mins > 0) {
+                unit = mins === 1 ? ' minute' : ' minutes';
+                value = mins + unit + ' ago';
+            }
+            else if (mins > 60) {
+                unit = mins === 1 ? ' hour' : ' hours';
+                value = (mins / 60).toFixed() + unit + ' ago';
+            }
             else
                 value = 'just now';
             self.calculatedLatestUpdate(value); 
@@ -269,6 +273,7 @@ function MainViewModel() {
         self.currentConditionsIcon('http://openweathermap.org/img/w/' + currentForecast.weather[0].icon + '.png');
         self.currentConditionsText(self.titalize(currentForecast.weather[0].description));
         self.latestUpdateDate(new Date());
+        self.calculateLatestUpdate();
     }
     this.selectDay = function(day) {
         self.selectedDay(day);
