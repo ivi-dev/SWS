@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/mobile.css">
 </head>
-<body data-bind="autoWeatherUpdate, event: { keyup: buttonPressed }">
+<body data-bind="autoWeatherUpdate, event: { keyup: buttonPressed } ">
     <!-- The units chooser -->
     <section id="unit-types" data-bind="foreach: tempUnits">
         <div class="unit" data-bind="html: output(), 
@@ -72,7 +72,7 @@
     <!-- The 5-day forecast section -->
     <section id="forecast" data-bind="foreach: forecast">
         <div class="day" data-bind="click: $parent.selectDay">
-            <div class="row dow" data-bind="text: $parent.parseWeekday(date.getDay())"></div>
+            <div class="row dow" data-bind="parseWeekday: date.getDay()"></div>
             <div class="row"><img data-bind="attr: { src: icon }"></div>
             <div class="row">
                 <i class="fas fa-thermometer-full" title="Temperature"></i>
@@ -96,9 +96,7 @@
     <!-- The hourly report -->
     <section id="hourly-report" data-bind="visible: selectedDay">
         <h2>Hourly Report: 
-            <span class="date" data-bind="text: selectedDay() ? parseWeekday(selectedDay().date.getDay()) + ' ' 
-                                                        + selectedDay().date.getDate() + ' ' + 
-                                                        parseMonth(selectedDay().date.getMonth()) : '--- -- ---'"></span>
+            <span class="date" data-bind="text: reportDate"></span>
         </h2>
         <!-- ko if: selectedDay -->
             <!-- ko foreach: selectedDay().readings -->
@@ -126,9 +124,6 @@
     </section>
 
     <script src="/js/ko.js"></script>
-    <script type="module" src="/js/utils.js"></script>
-    <script type="module" src="/js/weather_codes_loader.js"></script>
-    <script type="module" src="/js/cities_database_loader.js"></script>
     <script type="module" src="/js/index.js"></script>
 </body>
 </html>
