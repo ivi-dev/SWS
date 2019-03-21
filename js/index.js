@@ -380,18 +380,24 @@ function MainViewModel() {
     this.updateLocations = function(allLocations, nthLocation, limit) {
         if (nthLocation === 0)
             self.locationsDisplayList.removeAll();
-        for (let i = nthLocation; i < limit; i++) {
-            if (self.locationsDisplayList().length === allLocations.length)
+        let a = [];
+        for (let i = nthLocation; i < nthLocation + limit; i++) {
+            if (self.locationsDisplayList().length === allLocations.length) 
                 break;
+            a.push(allLocations[i]);
             self.locationsDisplayList.push(allLocations[i]);
         }
+        console.log('All locations: ' + allLocations.length);
+        console.log('Displayed locations: ' + self.locationsDisplayList().length);
+        console.log('Limit: ' + limit);
+        console.log(a);
     }
     this.showNextSegmentOfLocations = function(data, event) {
-        const scrollTop = Math.abs(event.target.scrollTop);
         if (Math.abs(event.target.scrollTop) === (event.target.scrollHeight - event.target.offsetHeight)) {
             self.locationIndex(self.locationIndex() + self.locationsLimit + 1);
             self.updateLocations(self.locationsList(), self.locationIndex(), self.locationsLimit);
         }
+        console.log('Location index: ' + self.locationIndex());
     }
     this.changeLocation = function(location) {
         self.selectedLocation(location);
